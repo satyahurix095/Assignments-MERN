@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .apidatacontainer {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+        gap: 10px;
+      }
+      img {
+        height: 150px;
+        width: 100%;
+      }
+      .country-info {
+        display: grid;
+        grid-template-rows: auto auto auto auto;
+        text-align: center;
+        border: 1px solid #ccc;
+        padding: 10px;
+        border-radius: 5px;
+      }
+      @media (max-width: 768px) {
+        .apidatacontainer {
+          grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        }
+      }
+
+      @media (max-width: 480px) {
+        .apidatacontainer {
+          grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="apidatacontainer"></div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", getDataFromAPI);
+
+      function getDataFromAPI() {
+        fetch("https://restcountries.com/v3.1/all")
+          .then((response) => response.json())
+          .then((data) => displayData(data))
+          .catch((error) => console.error("Error fetching data:", error));
+      }
+
+      function displayData(data) {
+        const container = document.querySelector(".apidatacontainer");
+
+        data.forEach((country) => {
+          var countryInfoContainer = document.createElement("div");
+
+          var imageElement = document.createElement("img");
+          imageElement.src = country.flags.svg;
+          imageElement.alt = country.name.common + " flag";
+          countryInfoContainer.append(imageElement);
+
+          var nameElement = document.createElement("h2");
+          nameElement.textContent = "Name: " + country.name.common;
+          countryInfoContainer.append(nameElement);
+
+          var populationElement = document.createElement("p");
+          populationElement.textContent = "Population: " + country.population;
+          countryInfoContainer.append(populationElement);
+
+          var regionElement = document.createElement("p");
+          regionElement.textContent = "Region: " + country.region;
+          countryInfoContainer.append(regionElement);
+
+          var capitalElement = document.createElement("p");
+          capitalElement.textContent = "Capital: " + country.capital;
+          countryInfoContainer.append(capitalElement);
+
+          container.append(countryInfoContainer);
+        });
+      }
+    </script>
+  </body>
+</html>

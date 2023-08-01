@@ -1,0 +1,44 @@
+var Name;
+var marks;
+var maxmark = 0;
+const scores = [
+  {
+    marks: 32,
+    name: "Yvette Merritt",
+  },
+  {
+    marks: 57,
+    name: "Lillian Ellis",
+  },
+  {
+    marks: 22,
+    name: "Mccall Carter",
+  },
+  {
+    marks: 21,
+    name: "Pate Collier",
+  },
+  {
+    marks: 91,
+    name: "Debra Beard",
+  },
+  {
+    marks: 75,
+    name: "Nettie Hancock",
+  },
+  {
+    marks: 20,
+    name: "Hatfield Hodge",
+  },
+];
+const result = scores.map((mark) => mark.marks);
+for (var mark of result) {
+  if (mark > maxmark) {
+    maxmark = mark;
+  }
+}
+console.log(
+  scores
+    .filter((toppername) => toppername.marks === maxmark)
+    .map((toppername) => toppername.name)
+);
